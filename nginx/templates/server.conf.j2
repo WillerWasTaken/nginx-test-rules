@@ -1,0 +1,13 @@
+server {
+    listen 80;
+
+    server_name nginx-test.com;
+
+    location /front {
+        proxy_pass http://{{ front_url }};
+    }
+
+    location /api {
+        proxy_pass http://{{ back_url }};
+    }
+}

@@ -1,0 +1,19 @@
+---
+- name: Converge
+  hosts: all
+  roles:
+    - {
+      name: mock-server,
+      mock_server_name: front-app,
+      mock_server_port: 8080
+    }
+    - {
+      name: mock-server,
+      mock_server_name: back-app,
+      mock_server_port: 8081
+    }
+    - {
+      name: nginx,
+      front_url: '127.0.0.1:8080',
+      back_url: '127.0.0.1:8081'
+    }

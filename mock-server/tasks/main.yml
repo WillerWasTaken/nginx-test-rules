@@ -1,0 +1,32 @@
+---
+
+- name: Ensure python3 is present
+  package:
+    name: python3
+    state: present
+
+- name: Create mock server folder
+  file:
+    path: "/opt/mock_server"
+    state: directory
+
+- name: Copy server script
+  copy:
+    src: mock_server.py
+    dest: "/opt/mock_server/mock_server.py"
+
+- name: Copy the application service configuration
+  template:
+    src: "app_init.j2"
+    dest: "/etc/init.d/{{ mock_server_name }}d"
+    mode: "0751"
+
+- name: Ensure the service is started
+  service:
+    name: "{{ mock_server_name }}d"
+    state: started
+
+- name: Enable the service
+  service:
+    name: "{{ mock_server_name }}d"
+    enabled: "yes"
